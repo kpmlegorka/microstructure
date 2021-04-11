@@ -27,35 +27,35 @@ with colum2:
 with colum3:
     nerKa=st.checkbox("XGBoost", False)
 
-
+l0 = st.sidebar.selectbox('Выберите жидкость', ('Вода','Этанол','60% глицерин','Фреоны'))
 
 genre = st.radio("Выберите вид структуры: 3D или 2D",('3D', '2D'))
 if genre == '3D':
-#Kq
-    x1 = st.sidebar.slider('Kq', min_value=8, max_value=12000,  value=1190)
+#q 124 index
+    x1 = st.sidebar.slider('q (в Вт)', min_value=2400, max_value=2500000,  value=189327)
 
-#angle/90
-    x2 = st.sidebar.slider('angle/90', min_value=0.78, max_value=1.00,  value=0.89)
+#угол/90
+    x2 = st.sidebar.slider('Угол наклона структуры', min_value=70, max_value=90,  value=80)
 
 #h/lo
-    x3 = st.sidebar.slider('h/lo', min_value=0.09, max_value=0.71,  value=0.23)
+    x3 = st.sidebar.slider('Высота ребера (h в мкм)', min_value=220, max_value=750,  value=570)
 
 #D/lo
-    x4 = st.sidebar.slider('Δ/lo', min_value=0.01, max_value=0.30,  value=0.08)
+    x4 = st.sidebar.slider('Продольный шаг ребера (D в мкм)', min_value=5, max_value=350,  value=210)
 
 #d/lo
-    x5 = st.sidebar.slider('δ/lo', min_value=0.04, max_value=0.40,  value=0.06)
+    x5 = st.sidebar.slider('Толщина ребра (d в мкм)', min_value=105, max_value=365,  value=140)
 
 #u/lo
-    x6 = st.sidebar.slider('u/lo', min_value=0.01, max_value=0.30,  value=0.07)
+    x6 = st.sidebar.slider('Поперечный шаг ребра (u в мкм)', min_value=10, max_value=300,  value=180)
 
 #s/lo
-    x7 = st.sidebar.slider('s/lo', min_value=0.01, max_value=0.79,  value=0.06)
+    x7 = st.sidebar.slider('Ширина ребра (s в мкм)', min_value=50, max_value=830,  value=140)
 #Pr
     x8 = st.sidebar.slider('Pr', min_value=1.7, max_value=6.8,  value=1.75)
 
-    y=1.49*x1**(-0.15)*x2**(-1.720)*x3**(0.313)*x4**(0.069)*x5**(0.078)*x6**(-0.454)*x7**(-0.492)   
-    data_slider = {'Kq': [x1], 'angle/90': [x2], 'h/lo': [x3], 'D/lo': [x4], 'd/lo': [x5], 'u/lo': [x6], 's/lo': [x7], 'Pr': [x8]}
+    y=1.49*(x1*Kq_bezq)**(-0.15)*(x2/90)**(-1.720)*(x3/1000000/l_g)**(0.313)*(x4/1000000/l_g)**(0.069)*(x5/1000000/l_g)**(0.078)*(x6/1000000/l_g)**(-0.454)*(x7/1000000/l_g)**(-0.492)   
+    data_slider = {'Kq': [x1*Kq_bezq], 'angle/90': [x2/90], 'h/lo': [x3/1000000/l_g], 'D/lo': [x4/1000000/l_g], 'd/lo': [x5/1000000/l_g], 'u/lo': [x6/1000000/l_g], 's/lo': [x7/1000000/l_g], 'Pr': [x8]}
     nm = pd.DataFrame(data=data_slider)
     
     col1, col2= st.beta_columns(2)
@@ -64,24 +64,15 @@ if genre == '3D':
         st.image('3d.jpg',  use_column_width=True)
     with col2:
         st.header("Значение интесификации теплоотдачи")  
-        st.write('Kq=', x1,'; ','angle/90=', x2,'; ','h/lo=', x3,'; ','Δ/lo=', x4,'; ','δ/lo=', x5,'; ','u/lo=', x6,'; ','s/lo=', x7, '; ','Pr', x8)
+        st.write('q=', x1/1000,'кВт; ','угол=', x2,'°; ','h=', x3,'мкм; ','Δ=', x4,'мкм; ','δ=', x5,'мкм; ','u=', x6,'мкм; ','s=', x7, 'мкм; ','Pr', x8, 'мкм')
         st.write('Полиноминальная регрессия: α/α0=',round(y, 2))
         if rndFors:
-            #rndm=RandomForestRegressor(n_estimators=100, max_features ='sqrt')
-            #rndm.fit(X_train, y_train)
             y_forest=rndm.predict(nm)
             st.write('RandomForest: α/α0=',round(y_forest[0], 2))
         if linReg:
-            #lm = LinearRegression()
-            #model = lm.fit(X_train, y_train)
             y_linReg = lm.predict(nm)
             st.write('GBRegressor: α/α0=',round(y_linReg[0], 2))
         if nerKa:
-            #dataset=xdd.to_numpy()      
-            #X_np = dataset[:,0:7]
-            #y_np = dataset[:,7]
-            #Xmodel = xgboost.XGBRegressor()
-            #Xmodel.fit(X_np, y_np)
             y_nerKa = Xmodel.predict(nm)  #(xnm)
             st.write('XGBoost: α/α0=',round(y_nerKa[0], 2))
 else:
