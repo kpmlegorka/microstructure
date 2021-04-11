@@ -53,6 +53,31 @@ if genre == '3D':
     x7 = st.sidebar.slider('Ширина ребра (s в мкм)', min_value=50, max_value=830,  value=140)
 #Pr
     x8 = st.sidebar.slider('Pr', min_value=1.7, max_value=6.8,  value=1.75)
+    
+    if l0=='Вода':
+        l_g=0.002502867
+        r=2256800
+        p_par=0.598
+        u=0.000000295
+        Kq_bezq=l_g/r/p_par/u
+    elif l0=='Этанол':
+        l_g=0.001437944
+        r=800000
+        p_par=1.85
+        u=0.0000005366
+        Kq_bezq=l_g/r/p_par/u
+    elif l0=='60% глицерин':
+        l_g=0.003112722
+        r=2520000
+        p_par=1.104
+        u=0.00000051
+        Kq_bezq=l_g/r/p_par/u
+    else:
+        l_g=0.001038336
+        r=146120
+        p_par=5.87
+        u=0.0000002875
+        Kq_bezq=l_g/r/p_par/u
 
     y=1.49*(x1*Kq_bezq)**(-0.15)*(x2/90)**(-1.720)*(x3/1000000/l_g)**(0.313)*(x4/1000000/l_g)**(0.069)*(x5/1000000/l_g)**(0.078)*(x6/1000000/l_g)**(-0.454)*(x7/1000000/l_g)**(-0.492)   
     data_slider = {'Kq': [x1*Kq_bezq], 'angle/90': [x2/90], 'h/lo': [x3/1000000/l_g], 'D/lo': [x4/1000000/l_g], 'd/lo': [x5/1000000/l_g], 'u/lo': [x6/1000000/l_g], 's/lo': [x7/1000000/l_g], 'Pr': [x8]}
