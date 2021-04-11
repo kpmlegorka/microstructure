@@ -117,7 +117,7 @@ else:
     x5 = st.sidebar.slider('Толщина ребра (δ в мкм)', min_value=25, max_value=1050,  value=1050)
 #Pr
     x6 = st.sidebar.slider('Pr', min_value=1.7, max_value=6.8,  value=1.75)
-     if l0=='Вода':
+    if l0=='Вода':
         l_g=0.002502867
         r=2256800
         p_par=0.598
