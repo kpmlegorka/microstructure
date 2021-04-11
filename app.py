@@ -41,10 +41,10 @@ if genre == '3D':
     x3 = st.sidebar.slider('Высота ребера (h в мкм)', min_value=220, max_value=750,  value=570)
 
 #D/lo
-    x4 = st.sidebar.slider('Продольный шаг ребера (D в мкм)', min_value=5, max_value=350,  value=210)
+    x4 = st.sidebar.slider('Продольный шаг ребера (Δ в мкм)', min_value=5, max_value=350,  value=210)
 
 #d/lo
-    x5 = st.sidebar.slider('Толщина ребра (d в мкм)', min_value=105, max_value=365,  value=140)
+    x5 = st.sidebar.slider('Толщина ребра (δ в мкм)', min_value=105, max_value=365,  value=140)
 
 #u/lo
     x6 = st.sidebar.slider('Поперечный шаг ребра (u в мкм)', min_value=10, max_value=300,  value=180)
@@ -101,51 +101,66 @@ if genre == '3D':
             y_nerKa = Xmodel.predict(nm)  #(xnm)
             st.write('XGBoost: α/α0=',round(y_nerKa[0], 2))
 else:
-#Kq
-    x1 = st.sidebar.slider('Kq', min_value=13, max_value=13660,  value=203)
+#q 676 index
+    x1 = st.sidebar.slider('q (в Вт)', min_value=3800, max_value=2200000,  value=50283)
 
 #угол/90
-    x2 = st.sidebar.slider('angle/90', min_value=0.72, max_value=1.00,  value=1.00)
+    x2 = st.sidebar.slider('Угол наклона структуры', min_value=65, max_value=90,  value=90)
 
 #h/lo
-    x3 = st.sidebar.slider('h/lo', min_value=0.03, max_value=1.45,  value=1.45)
+    x3 = st.sidebar.slider('Высота ребера (h в мкм)', min_value=90, max_value=1530,  value=1038)
 
 #D/lo
-    x4 = st.sidebar.slider('Δ/lo', min_value=0.01, max_value=1.30,  value=1.29)
+    x4 = st.sidebar.slider('Продольный шаг ребера (Δ в мкм)', min_value=5, max_value=1360,  value=450)
 
 #d/lo
-    x5 = st.sidebar.slider('δ/lo', min_value=0.01, max_value=1.00,  value=0.22)
+    x5 = st.sidebar.slider('Толщина ребра (δ в мкм)', min_value=25, max_value=1050,  value=1050)
 #Pr
     x6 = st.sidebar.slider('Pr', min_value=1.7, max_value=6.8,  value=1.75)
-
-    y=2.66*x1**(-0.09)*x2**(-0.091)*x3**(0.133)*x4**(0.035)*x5**(-0.149)
+     if l0=='Вода':
+        l_g=0.002502867
+        r=2256800
+        p_par=0.598
+        u=0.000000295
+        Kq_bezq=l_g/r/p_par/u
+    elif l0=='Этанол':
+        l_g=0.001437944
+        r=800000
+        p_par=1.85
+        u=0.0000005366
+        Kq_bezq=l_g/r/p_par/u
+    elif l0=='60% глицерин':
+        l_g=0.003112722
+        r=2520000
+        p_par=1.104
+        u=0.00000051
+        Kq_bezq=l_g/r/p_par/u
+    else:
+        l_g=0.001038336
+        r=146120
+        p_par=5.87
+        u=0.0000002875
+        Kq_bezq=l_g/r/p_par/u
+        
+    y=2.66*(x1*Kq_bezq)**(-0.09)*(x2/90)**(-0.091)*(x3/1000000/l_g)**(0.133)*(x4/1000000/l_g)**(0.035)*(x5/1000000/l_g)**(-0.149)
     
-    data_slider = {'Kq': [x1], 'angle/90': [x2], 'h/lo': [x3], 'D/lo': [x4], 'd/lo': [x5], 'Pr': [x6]}
+    data_slider = {'Kq': [x1*Kq_bezq], 'angle/90': [x2/90], 'h/lo': [x3/1000000/l_g], 'D/lo': [x4/1000000/l_g], 'd/lo': [x5/1000000/l_g], 'Pr': [x6]}
     nm = pd.DataFrame(data=data_slider)
-    #xnm=np.array([[x1, x2, x3, x4, x5]])
+    
     col1, col2= st.beta_columns(2)
     with col1:
         st.header("2D структура")
         st.image('2d.jpg',  use_column_width=True)
     with col2:
         st.header("Значение интенсификации теплоотдачи")
-        st.write('Kq=', x1,'; ','angle/90=', x2,'; ','h/lo=', x3,'; ','Δ/lo=', x4,'; ','δ/lo=', x5,'; ','Pr=', x6)
+        st.write('q=', round(x1/1000, 1),'кВт; ','угол=', x2,'°; ','h=', x3,'мкм; ','Δ=', x4,'мкм; ','δ=', x5,'мкм; ','Pr', x6, 'мкм')
         st.write('Полиноминальная регрессия: α/α0=',round(y, 2))
         if rndFors:
-            #rndm=RandomForestRegressor(n_estimators=100, max_features ='sqrt')
-            #rndm.fit(XU_train, yU_train)
             y_forest=rndm2.predict(nm)
             st.write('RandomForest: α/α0=',round(y_forest[0], 2))
         if linReg:
-            #lm = LinearRegression()
-            #model = lm.fit(XU_train, yU_train)
             y_linReg = lm2.predict(nm)
             st.write('GBRegressor: α/α0=',round(y_linReg[0], 2))
         if nerKa:
-            #dataset=xdd.to_numpy()      
-            #X_np = dataset[:,0:7]
-            #y_np = dataset[:,7]
-            #Xmodel = xgboost.XGBRegressor()
-            #Xmodel.fit(X_np, y_np)
             y_nerKa = Xmodel2.predict(nm)
             st.write('XGBoost: α/α0=',round(y_nerKa[0], 2))
