@@ -14,8 +14,8 @@ rndm = joblib.load('linear_regression_model_1.pkl')
 Xmodel=joblib.load('linear_regression_model_1.pkl')
 lm=joblib.load('linear_regression_model_1.pkl')
 
-rndm2 = joblib.load('linear_regression_model_1.pkl.pkl')
-Xmodel2=joblib.load('linear_regression_model_1.pkl.pkl')
+rndm2 = joblib.load('linear_regression_model_1.pkl')
+Xmodel2=joblib.load('linear_regression_model_1.pkl')
 lm2=joblib.load('linear_regression_model_1.pkl')
 
 
