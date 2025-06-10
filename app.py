@@ -19,7 +19,7 @@ Xmodel2=joblib.load('linear_regression_model_1.pkl')
 lm2=joblib.load('linear_regression_model_1.pkl')
 
 
-colum1, colum2, colum3= st.beta_columns(3)
+colum1, colum2, colum3= st.columns(3)
 with colum1:
     rndFors=st.checkbox("RandomForest", False)
 with colum2:
@@ -83,7 +83,7 @@ if genre == '3D':
     data_slider = {'Kq': [x1*Kq_bezq], 'angle/90': [x2/90], 'h/lo': [x3/1000000/l_g], 'D/lo': [x4/1000000/l_g], 'd/lo': [x5/1000000/l_g], 'u/lo': [x6/1000000/l_g], 's/lo': [x7/1000000/l_g], 'Pr': [x8]}
     nm = pd.DataFrame(data=data_slider)
     
-    col1, col2= st.beta_columns(2)
+    col1, col2= st.columns(2)
     with col1:
         st.header("3D структура")
         st.image('3d.jpg',  use_column_width=True)
@@ -147,7 +147,7 @@ else:
     data_slider = {'Kq': [x1*Kq_bezq], 'angle/90': [x2/90], 'h/lo': [x3/1000000/l_g], 'D/lo': [x4/1000000/l_g], 'd/lo': [x5/1000000/l_g], 'Pr': [x6]}
     nm = pd.DataFrame(data=data_slider)
     
-    col1, col2= st.beta_columns(2)
+    col1, col2= st.columns(2)
     with col1:
         st.header("2D структура")
         st.image('2d.jpg',  use_column_width=True)
