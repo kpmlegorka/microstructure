@@ -10,7 +10,7 @@ import joblib
 #### Чтобы прогнозировать теплоотдачу с помощью "нейросетей", используйте переключатели ниже:
 '''
 
-rndm = joblib.load('rndmF_model.pkl')
+rndm = joblib.load('rndmF_model.pkl', mmap_mode = None , ensure_native_byte_order = 'auto')
 Xmodel=joblib.load('XGBR_model.pkl')
 lm=joblib.load('GBR_model.pkl')
 
