@@ -134,7 +134,7 @@ elif genre == 'наноструктура':
         st.image('наноструктуры.jpg',  use_column_width=True)
     with col2:
         st.header("Значение интесификации теплоотдачи")  
-        st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =' x7, 'нм')
+        st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =', x7, 'нм')
         if linReg:
             y_linReg = lm.predict(nm)
             st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -198,5 +198,6 @@ else:
         if randomforest:
             y_randomforest=rndmforestmodel.predict(nm)
             st.write('RandomForest: α/α0=',round(y_forest[0], 2))
+
 
 
