@@ -55,7 +55,7 @@ if genre == 'щеточно-волокнистая':
         x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=1300, max_value=1300,  value=1300)
        #d
         x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=550, max_value=550,  value=550)
-    elif liquid=='FC-72'
+    elif liquid=='FC-72':
        #q 124 index
         x1 = st.sidebar.slider('q (в Вт)', min_value=1000, max_value=150000,  value=50000)
        #h
@@ -198,4 +198,5 @@ else:
         if randomforest:
             y_randomforest=rndmforestmodel.predict(nm)
             st.write('RandomForest: α/α0=',round(y_forest[0], 2))
+
 
