@@ -293,10 +293,9 @@ else:
        #porosity
         x9 = st.sidebar.slider('Пористость, %', min_value=33, max_value=58,  value=40)
         
-        data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'DeltaCap longitudinal pitch': [x7/1000], 'u transverse pitch': [x7/1000], 'porosity, %': [x9], 'q': [x1]}
+        data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 'u transverse pitch': [x7/1000], 'porosity, %': [x9], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
         
-
         with col2:
             st.header("Значение интесификации теплоотдачи")  
             st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =', x7, 'нм', 'пористость =', x9)
@@ -325,10 +324,9 @@ else:
        #porosity
         x9 = st.sidebar.slider('Пористость, %', min_value=22, max_value=40,  value=30)
         
-        data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'DeltaCap longitudinal pitch': [x7/1000], 'u transverse pitch': [x7/1000], 'porosity, %': [x9], 'q': [x1]}
+        data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 'u transverse pitch': [x7/1000], 'porosity, %': [x9], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
         
-
         with col2:
             st.header("Значение интесификации теплоотдачи")  
             st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =', x7, 'нм', 'пористость =', x9)
@@ -344,4 +342,5 @@ else:
             if randomforest:
                 y_randomforest=rndmforestmodel_porous_fins_n_Pentane.predict(nm)
                 st.write('RandomForest: α/α0=',round(y_randomforest[0], 2))
+
 
