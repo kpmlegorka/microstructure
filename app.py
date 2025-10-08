@@ -42,14 +42,14 @@ rndmforestmodel_nanostructures_ethanol=joblib.load('random_forest_nanostructures
 rndmforestmodel_nanostructures_FC72=joblib.load('random_forest_nanostructures_FC-72.pkl')
 
 #porous fins
-lm_porous-fins_water=joblib.load('linear_regression_porous-fins_water.pkl')
-lm_porous-fins_n-Pentane=joblib.load('linear_regression_porous-fins_n-Pentane.pkl')
-ridgemodel_porous-fins_water=joblib.load('ridge_porous-fins_water.pkl')
-ridgemodel_porous-fins_n-Pentane=joblib.load('ridge_porous-fins_n-Pentane.pkl')
-dectreemodel_porous-fins_water=joblib.load('decision_tree_porous-fins_water.pkl')
-dectreemodel_porous-fins_n-Pentane=joblib.load('decision_tree_porous-fins_n-Pentane.pkl')
-rndmforestmodel_porous-fins_water=joblib.load('random_forest_porous-fins_water.pkl')
-rndmforestmodel_porous-fins_n-Pentane=joblib.load('random_forest_porous-fins_n-Pentane.pkl')
+lm_porous_fins_water=joblib.load('linear_regression_porous-fins_water.pkl')
+lm_porous_fins_n_Pentane=joblib.load('linear_regression_porous-fins_n-Pentane.pkl')
+ridgemodel_porous_fins_water=joblib.load('ridge_porous-fins_water.pkl')
+ridgemodel_porous_fins_n_Pentane=joblib.load('ridge_porous-fins_n-Pentane.pkl')
+dectreemodel_porous_fins_water=joblib.load('decision_tree_porous-fins_water.pkl')
+dectreemodel_porous_fins_n_Pentane=joblib.load('decision_tree_porous-fins_n-Pentane.pkl')
+rndmforestmodel_porous_fins_water=joblib.load('random_forest_porous-fins_water.pkl')
+rndmforestmodel_porous_fins_n_Pentane=joblib.load('random_forest_porous-fins_n-Pentane.pkl')
 
 colum1, colum2, colum3, colum4= st.columns(4)
 with colum1:
@@ -282,6 +282,7 @@ else:
         if randomforest:
             y_randomforest=rndmforestmodel.predict(nm)
             st.write('RandomForest: α/α0=',round(y_forest[0], 2))
+
 
 
 
