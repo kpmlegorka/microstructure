@@ -101,9 +101,9 @@ if genre == 'щеточно-волокнистая':
        #q 124 index
         x1 = st.sidebar.slider('q (в Вт)', min_value=35000, max_value=640000,  value=250000)
        #h
-        x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=1300, max_value=1300,  value=1300)
+        x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=1250, max_value=1350,  value=1300, disabled=True)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=550, max_value=550,  value=550)
+        x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=500, max_value=600,  value=550, disabled=True)
         
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
@@ -155,7 +155,7 @@ if genre == 'щеточно-волокнистая':
        #h
         x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=9, max_value=25,  value=15)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=13, max_value=13,  value=13)
+        x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=12, max_value=14,  value=13, disabled=True)
         
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
@@ -202,11 +202,11 @@ elif genre == 'наноструктура':
        #q 124 index
         x1 = st.sidebar.slider('q (в Вт)', min_value=10000, max_value=600000,  value=30000)
        #h
-        x3 = st.sidebar.slider('Высота структуры (h в нм)', min_value=60000, max_value=60000,  value=60000)
+        x3 = st.sidebar.slider('Высота структуры (h в нм)', min_value=55000, max_value=65000,  value=60000, disabled=True)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина структуры (δ/s в нм)', min_value=30000, max_value=30000,  value=30000)
+        x5 = st.sidebar.slider('Толщина / ширина структуры (δ/s в нм)', min_value=25000, max_value=35000,  value=30000, disabled=True)
        #u
-        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ/u в нм)', min_value=60000, max_value=60000,  value=60000)
+        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ/u в нм)', min_value=55000, max_value=65000,  value=60000, disabled=True)
    
 
     data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'DeltaCap longitudinal pitch': [x7/1000], 'u transverse pitch': [x7/1000], 'q': [x1]}
@@ -282,6 +282,7 @@ else:
         if randomforest:
             y_randomforest=rndmforestmodel.predict(nm)
             st.write('RandomForest: α/α0=',round(y_forest[0], 2))
+
 
 
 
