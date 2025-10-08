@@ -9,7 +9,7 @@ import joblib
 # Подбор геометрических параметров микроструктуры
 #### Чтобы прогнозировать теплоотдачу с помощью "нейросетей", используйте переключатели ниже:
 '''
-
+#nanowires
 lm_nanowires_water=joblib.load('linear_regression_nanowires_water.pkl')
 lm_nanowires_ethanol=joblib.load('linear_regression_nanowires_ethanol.pkl')
 lm_nanowires_FC72=joblib.load('linear_regression_nanowires_FC-72.pkl')
@@ -27,6 +27,30 @@ rndmforestmodel_nanowires_ethanol=joblib.load('random_forest_nanowires_ethanol.p
 rndmforestmodel_nanowires_FC72=joblib.load('random_forest_nanowires_FC-72.pkl')
 rndmforestmodel_nanowires_PF5060=joblib.load('random_forest_nanowires_PF-5060.pkl')
 
+#nanostructures
+lm_nanostructures_water=joblib.load('linear_regression_nanostructures_water.pkl')
+lm_nanostructures_ethanol=joblib.load('linear_regression_nanostructures_ethanol.pkl')
+lm_nanostructures_FC72=joblib.load('linear_regression_nanostructures_FC-72.pkl')
+ridgemodel_nanostructures_water=joblib.load('ridge_nanostructures_water.pkl')
+ridgemodel_nanostructures_ethanol=joblib.load('ridge_nanostructures_ethanol.pkl')
+ridgemodel_nanostructures_FC72=joblib.load('ridge_nanostructures_FC-72.pkl')
+dectreemodel_nanostructures_water=joblib.load('decision_tree_nanostructures_water.pkl')
+dectreemodel_nanostructures_ethanol=joblib.load('decision_tree_nanostructures_ethanol.pkl')
+dectreemodel_nanostructures_FC72=joblib.load('decision_tree_nanostructures_FC-72.pkl')
+rndmforestmodel_nanostructures_water=joblib.load('random_forest_nanostructures_water.pkl')
+rndmforestmodel_nanostructures_ethanol=joblib.load('random_forest_nanostructures_ethanol.pkl')
+rndmforestmodel_nanostructures_FC72=joblib.load('random_forest_nanostructures_FC-72.pkl')
+
+#porous fins
+lm_porous-fins_water=joblib.load('linear_regression_porous-fins_water.pkl')
+lm_porous-fins_n-Pentane=joblib.load('linear_regression_porous-fins_n-Pentane.pkl')
+ridgemodel_porous-fins_water=joblib.load('ridge_porous-fins_water.pkl')
+ridgemodel_porous-fins_n-Pentane=joblib.load('ridge_porous-fins_n-Pentane.pkl')
+dectreemodel_porous-fins_water=joblib.load('decision_tree_porous-fins_water.pkl')
+dectreemodel_porous-fins_n-Pentane=joblib.load('decision_tree_porous-fins_n-Pentane.pkl')
+rndmforestmodel_porous-fins_water=joblib.load('random_forest_porous-fins_water.pkl')
+rndmforestmodel_porous-fins_n-Pentane=joblib.load('random_forest_porous-fins_n-Pentane.pkl')
+
 colum1, colum2, colum3, colum4= st.columns(4)
 with colum1:
     linReg=st.checkbox("LinearRegression", False)
@@ -38,8 +62,14 @@ with colum4:
     randomforest=st.checkbox("RandomForest", False)
 
 genre = st.radio("Выберите вид структуры: Щеточно-волокнистая, наноструктура или пористые ребра",('щеточно-волокнистая', 'наноструктура', 'пористые ребра'))
+
 if genre == 'щеточно-волокнистая':
     liquid = st.sidebar.selectbox('Выберите жидкость', ('Вода','Этанол','FC-72','PF-5060'))
+
+    col1, col2= st.columns(2)
+    with col1:
+        st.header("Щеточно-волокнистая")
+        st.image('щеточно-волокнистые.jpg',  use_column_width=True)
 
     if liquid=='Вода':
        #q 124 index
@@ -48,6 +78,25 @@ if genre == 'щеточно-волокнистая':
         x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=450, max_value=32000,  value=5000)
        #d
         x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=40, max_value=850,  value=400)
+       
+        data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
+        nm = pd.DataFrame(data=data_slider)
+        with col2:
+            st.header("Значение интесификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм')
+            if linReg:
+                y_linReg = lm_nanowires_water.predict(nm)
+                st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
+            if ridge:
+                y_ridge = ridgemodel_nanowires_water.predict(nm)
+                st.write('Ridge: α/α0=',round(y_ridge[0], 2))
+            if decisiontree:
+                y_decisiontree=dectreemodel_nanowires_water.predict(nm)
+                st.write('DecisionTree: α/α0=',round(y_decisiontree[0], 2))
+            if randomforest:
+                y_randomforest=rndmforestmodel_nanowires_water.predict(nm)
+                st.write('RandomForest: α/α0=',round(y_forest[0], 2))
+        
     elif liquid=='Этанол':
        #q 124 index
         x1 = st.sidebar.slider('q (в Вт)', min_value=35000, max_value=640000,  value=250000)
@@ -55,13 +104,51 @@ if genre == 'щеточно-волокнистая':
         x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=1300, max_value=1300,  value=1300)
        #d
         x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=550, max_value=550,  value=550)
+        
+        data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
+        nm = pd.DataFrame(data=data_slider)
+        with col2:
+            st.header("Значение интесификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм')
+            if linReg:
+                y_linReg = lm_nanowires_ethanol.predict(nm)
+                st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
+            if ridge:
+                y_ridge = ridgemodel_nanowires_ethanol.predict(nm)
+                st.write('Ridge: α/α0=',round(y_ridge[0], 2))
+            if decisiontree:
+                y_decisiontree=dectreemodel_nanowires_ethanol.predict(nm)
+                st.write('DecisionTree: α/α0=',round(y_decisiontree[0], 2))
+            if randomforest:
+                y_randomforest=rndmforestmodel_nanowires_ethanol.predict(nm)
+                st.write('RandomForest: α/α0=',round(y_forest[0], 2))
+        
     elif liquid=='FC-72':
        #q 124 index
         x1 = st.sidebar.slider('q (в Вт)', min_value=1000, max_value=150000,  value=50000)
        #h
         x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=155, max_value=644,  value=300)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=100, max_value=270,  value=180)    
+        x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=100, max_value=270,  value=180)
+        
+        data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
+        nm = pd.DataFrame(data=data_slider)
+        with col2:
+            st.header("Значение интесификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм')
+            if linReg:
+                y_linReg = lm_nanowires_FC72.predict(nm)
+                st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
+            if ridge:
+                y_ridge = ridgemodel_nanowires_FC72.predict(nm)
+                st.write('Ridge: α/α0=',round(y_ridge[0], 2))
+            if decisiontree:
+                y_decisiontree=dectreemodel_nanowires_FC72.predict(nm)
+                st.write('DecisionTree: α/α0=',round(y_decisiontree[0], 2))
+            if randomforest:
+                y_randomforest=rndmforestmodel_nanowires_FC72.predict(nm)
+                st.write('RandomForest: α/α0=',round(y_forest[0], 2))   
+                
     else:
        #q 124 index
         x1 = st.sidebar.slider('q (в Вт)', min_value=3000, max_value=54000,  value=25000)
@@ -69,29 +156,26 @@ if genre == 'щеточно-волокнистая':
         x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=9, max_value=25,  value=15)
        #d
         x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=13, max_value=13,  value=13)
+        
+        data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
+        nm = pd.DataFrame(data=data_slider)
+        with col2:
+            st.header("Значение интесификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм')
+            if linReg:
+                y_linReg = lm_nanowires_PF5060.predict(nm)
+                st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
+            if ridge:
+                y_ridge = ridgemodel_nanowires_PF5060.predict(nm)
+                st.write('Ridge: α/α0=',round(y_ridge[0], 2))
+            if decisiontree:
+                y_decisiontree=dectreemodel_nanowires_PF5060.predict(nm)
+                st.write('DecisionTree: α/α0=',round(y_decisiontree[0], 2))
+            if randomforest:
+                y_randomforest=rndmforestmodel_nanowires_PF5060.predict(nm)
+                st.write('RandomForest: α/α0=',round(y_forest[0], 2))
 
-    data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
-    nm = pd.DataFrame(data=data_slider)
-    
-    col1, col2= st.columns(2)
-    with col1:
-        st.header("Щеточно-волокнистая")
-        st.image('щеточно-волокнистые.jpg',  use_column_width=True)
-    with col2:
-        st.header("Значение интесификации теплоотдачи")  
-        st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм')
-        if linReg:
-            y_linReg = lm.predict(nm)
-            st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
-        if ridge:
-            y_ridge = ridgemodel.predict(nm)
-            st.write('Ridge: α/α0=',round(y_ridge[0], 2))
-        if decisiontree:
-            y_decisiontree=dectreemodel.predict(nm)
-            st.write('DecisionTree: α/α0=',round(y_decisiontree[0], 2))
-        if randomforest:
-            y_randomforest=rndmforestmodel.predict(nm)
-            st.write('RandomForest: α/α0=',round(y_forest[0], 2))
+
 
 elif genre == 'наноструктура':
     liquid = st.sidebar.selectbox('Выберите жидкость', ('Вода','Этанол','FC-72'))
@@ -149,7 +233,7 @@ elif genre == 'наноструктура':
             st.write('RandomForest: α/α0=',round(y_forest[0], 2))
 
 else:
-    liquid = st.sidebar.selectbox('Выберите жидкость', ('Вода','Этанол','FC-72'))
+    liquid = st.sidebar.selectbox('Выберите жидкость', ('Вода','n-Pentane'))
 
     if liquid=='Вода':
        #q 124 index
@@ -198,7 +282,6 @@ else:
         if randomforest:
             y_randomforest=rndmforestmodel.predict(nm)
             st.write('RandomForest: α/α0=',round(y_forest[0], 2))
-
 
 
 
