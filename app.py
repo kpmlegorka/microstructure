@@ -51,6 +51,14 @@ dectreemodel_porous_fins_n_Pentane=joblib.load('decision_tree_porous-fins_n-Pent
 rndmforestmodel_porous_fins_water=joblib.load('random_forest_porous-fins_water.pkl')
 rndmforestmodel_porous_fins_n_Pentane=joblib.load('random_forest_porous-fins_n-Pentane.pkl')
 
+#q crit
+
+#nanostructures
+lm_nanostructures_water_qcrit=joblib.load('linear_regression_nanostructures_qcrit_water.pkl')
+ridgemodel_nanostructures_water_qcrit=joblib.load('ridge_nanostructures_qcrit_water.pkl')
+dectreemodel_nanostructures_water_qcrit=joblib.load('decision_tree_nanostructures_qcrit_water.pkl')
+rndmforestmodel_nanostructures_water_qcrit=joblib.load('random_forest_nanostructures_qcrit_water.pkl')
+
 colum1, colum2, colum3, colum4= st.columns(4)
 with colum1:
     linReg=st.checkbox("LinearRegression", False)
@@ -204,15 +212,23 @@ elif genre == 'наноструктура':
             if linReg:
                 y_linReg = lm_nanostructures_water.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
+                y_linReg_qcrit = lm_nanostructures_water_qcrit.predict(nm)
+                st.write('LinearRegression: q/q0=',round(y_linReg_qcrit[0], 2))
             if ridge:
                 y_ridge = ridgemodel_nanostructures_water.predict(nm)
                 st.write('Ridge: α/α0=',round(y_ridge[0], 2))
+                y_ridge_qcrit = ridgemodel_nanostructures_water_qcrit.predict(nm)
+                st.write('Ridge: q/q0=',round(y_ridge_qcrit[0], 2))
             if decisiontree:
                 y_decisiontree=dectreemodel_nanostructures_water.predict(nm)
                 st.write('DecisionTree: α/α0=',round(y_decisiontree[0], 2))
+                y_decisiontree_qcrit=dectreemodel_nanostructures_water_qcrit.predict(nm)
+                st.write('DecisionTree: q/q0=',round(y_decisiontree_qcrit[0], 2))
             if randomforest:
                 y_randomforest=rndmforestmodel_nanostructures_water.predict(nm)
                 st.write('RandomForest: α/α0=',round(y_randomforest[0], 2))
+                y_randomforest_qcrit=rndmforestmodel_nanostructures_water_qcrit.predict(nm)
+                st.write('RandomForest: q/q0=',round(y_randomforest_qcrit[0], 2))
        
     elif liquid=='Этанол':
        #q 124 index
@@ -233,15 +249,23 @@ elif genre == 'наноструктура':
             if linReg:
                 y_linReg = lm_nanostructures_ethanol.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
+                y_linReg_qcrit = lm_nanostructures_water_qcrit.predict(nm)
+                st.write('LinearRegression: q/q0=',round(y_linReg_qcrit[0], 2))
             if ridge:
                 y_ridge = ridgemodel_nanostructures_ethanol.predict(nm)
                 st.write('Ridge: α/α0=',round(y_ridge[0], 2))
+                y_ridge_qcrit = ridgemodel_nanostructures_water_qcrit.predict(nm)
+                st.write('Ridge: q/q0=',round(y_ridge_qcrit[0], 2))
             if decisiontree:
                 y_decisiontree=dectreemodel_nanostructures_ethanol.predict(nm)
                 st.write('DecisionTree: α/α0=',round(y_decisiontree[0], 2))
+                y_decisiontree_qcrit=dectreemodel_nanostructures_water_qcrit.predict(nm)
+                st.write('DecisionTree: q/q0=',round(y_decisiontree_qcrit[0], 2))
             if randomforest:
                 y_randomforest=rndmforestmodel_nanostructures_ethanol.predict(nm)
                 st.write('RandomForest: α/α0=',round(y_randomforest[0], 2))
+                y_randomforest_qcrit=rndmforestmodel_nanostructures_water_qcrit.predict(nm)
+                st.write('RandomForest: q/q0=',round(y_randomforest_qcrit[0], 2))
                 
     else:
        #q 124 index
@@ -262,15 +286,23 @@ elif genre == 'наноструктура':
             if linReg:
                 y_linReg = lm_nanostructures_FC72.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
+                y_linReg_qcrit = lm_nanostructures_water_qcrit.predict(nm)
+                st.write('LinearRegression: q/q0=',round(y_linReg_qcrit[0], 2))
             if ridge:
                 y_ridge = ridgemodel_nanostructures_FC72.predict(nm)
                 st.write('Ridge: α/α0=',round(y_ridge[0], 2))
+                y_ridge_qcrit = ridgemodel_nanostructures_water_qcrit.predict(nm)
+                st.write('Ridge: q/q0=',round(y_ridge_qcrit[0], 2))
             if decisiontree:
                 y_decisiontree=dectreemodel_nanostructures_FC72.predict(nm)
                 st.write('DecisionTree: α/α0=',round(y_decisiontree[0], 2))
+                y_decisiontree_qcrit=dectreemodel_nanostructures_water_qcrit.predict(nm)
+                st.write('DecisionTree: q/q0=',round(y_decisiontree_qcrit[0], 2))
             if randomforest:
                 y_randomforest=rndmforestmodel_nanostructures_FC72.predict(nm)
                 st.write('RandomForest: α/α0=',round(y_randomforest[0], 2))
+                y_randomforest_qcrit=rndmforestmodel_nanostructures_water_qcrit.predict(nm)
+                st.write('RandomForest: q/q0=',round(y_randomforest_qcrit[0], 2))
 
 #Пористые ребра  
 else:
@@ -296,6 +328,7 @@ else:
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 'u transverse pitch': [x7/1000], 'porosity, %': [x9], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
         
+
         with col2:
             st.header("Значение интесификации теплоотдачи")  
             st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =', x7, 'нм', 'пористость =', x9)
@@ -327,6 +360,7 @@ else:
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 'u transverse pitch': [x7/1000], 'porosity, %': [x9], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
         
+
         with col2:
             st.header("Значение интесификации теплоотдачи")  
             st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =', x7, 'нм', 'пористость =', x9)
@@ -342,5 +376,4 @@ else:
             if randomforest:
                 y_randomforest=rndmforestmodel_porous_fins_n_Pentane.predict(nm)
                 st.write('RandomForest: α/α0=',round(y_randomforest[0], 2))
-
 
