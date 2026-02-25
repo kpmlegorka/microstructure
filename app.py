@@ -89,7 +89,7 @@ if genre == 'щеточно-волокнистая':
     col1, col2= st.columns(2)
     with col1:
         st.header("Щеточно-волокнистая")
-        st.image('щеточно-волокнистые.jpg', width='content')
+        st.image('щеточно-волокнистые.jpg', use_column_width=True)
 
     if liquid=='Вода':
        #q 124 index
@@ -436,6 +436,7 @@ else:
                 st.write('RandomForest: α/α0=',round(y_randomforest[0], 2))
                 y_randomforest_qcrit=rndmforestmodel_porous_fins_water_qcrit.predict(nm)
                 st.write('RandomForest: qкрит/qкрит0=',round(y_randomforest_qcrit[0], 2))  
+
 
 
 
