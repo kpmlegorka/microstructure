@@ -376,7 +376,7 @@ else:
 
         with col2:
             st.header("Значение интенсификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм; ', 'Δ,u =', x7, 'нм; ', 'пористость =', x9)
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм; ', 'Δ,u =', x7, 'нм; ', 'пористость =', x9, '%')
             if linReg:
                 y_linReg = lm_porous_fins_water.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -416,7 +416,7 @@ else:
 
         with col2:
             st.header("Значение интенсификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм; ', 'Δ,u =', x7, 'нм; ', 'пористость =', x9)
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм; ', 'Δ,u =', x7, 'нм; ', 'пористость =', x9, '%')
             if linReg:
                 y_linReg = lm_porous_fins_n_Pentane.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
