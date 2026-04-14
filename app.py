@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -6,8 +7,8 @@ import joblib
 
 
 '''
-# Подбор геометрических параметров микроструктуры
-#### Чтобы прогнозировать теплоотдачу с помощью "нейросетей", используйте переключатели ниже:
+# Подбор геометрических параметров развитых поверхностей
+#### Чтобы прогнозировать теплоотдачу с помощью нейронных моделей обобщения, используйте переключатели ниже:
 '''
 #nanowires
 lm_nanowires_water=joblib.load('linear_regression_nanowires_water.pkl')
@@ -97,13 +98,13 @@ if genre == 'щеточно-волокнистая':
        #h
         x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=450, max_value=32000,  value=5000)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=40, max_value=850,  value=400)
+        x5 = st.sidebar.slider('Толщина / ширина волокна (δ,s в нм)', min_value=40, max_value=850,  value=400)
        
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
         with col2:
-            st.header("Значение интесификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм')
+            st.header("Значение интенсификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм')
             if linReg:
                 y_linReg = lm_nanowires_water.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -131,13 +132,13 @@ if genre == 'щеточно-волокнистая':
        #h
         x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=1250, max_value=1350, value=1300, disabled=True)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=500, max_value=600,  value=550, disabled=True)
+        x5 = st.sidebar.slider('Толщина / ширина волокна (δ,s в нм)', min_value=500, max_value=600,  value=550, disabled=True)
         
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
         with col2:
-            st.header("Значение интесификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм')
+            st.header("Значение интенсификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм')
             if linReg:
                 y_linReg = lm_nanowires_ethanol.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -165,13 +166,13 @@ if genre == 'щеточно-волокнистая':
        #h
         x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=155, max_value=644,  value=300)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=100, max_value=270,  value=180)
+        x5 = st.sidebar.slider('Толщина / ширина волокна (δ,s в нм)', min_value=100, max_value=270,  value=180)
         
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
         with col2:
-            st.header("Значение интесификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм')
+            st.header("Значение интенсификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм')
             if linReg:
                 y_linReg = lm_nanowires_FC72.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -199,13 +200,13 @@ if genre == 'щеточно-волокнистая':
        #h
         x3 = st.sidebar.slider('Высота волокна (h в нм)', min_value=9, max_value=25,  value=15)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина волокна (δ/s в нм)', min_value=12, max_value=14,  value=13, disabled=True)
+        x5 = st.sidebar.slider('Толщина / ширина волокна (δ,s в нм)', min_value=12, max_value=14,  value=13, disabled=True)
         
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
         with col2:
-            st.header("Значение интесификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм')
+            st.header("Значение интенсификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм')
             if linReg:
                 y_linReg = lm_nanowires_PF5060.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -243,16 +244,16 @@ elif genre == 'наноструктура':
        #h
         x3 = st.sidebar.slider('Высота структуры (h в нм)', min_value=10000, max_value=40000,  value=25000)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина структуры (δ/s в нм)', min_value=5000, max_value=20000,  value=10000)
+        x5 = st.sidebar.slider('Толщина / ширина структуры (δ,s в нм)', min_value=5000, max_value=20000,  value=10000)
        #u
-        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ/u в нм)', min_value=5000, max_value=40000,  value=10000)
+        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ,u в нм)', min_value=5000, max_value=40000,  value=10000)
        
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'DeltaCap longitudinal pitch': [x7/1000], 'u transverse pitch': [x7/1000], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
      
         with col2:
-            st.header("Значение интесификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =', x7, 'нм')
+            st.header("Значение интенсификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм; ', 'Δ,u =', x7, 'нм')
             if linReg:
                 y_linReg = lm_nanostructures_water.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -280,16 +281,16 @@ elif genre == 'наноструктура':
        #h
         x3 = st.sidebar.slider('Высота структуры (h в нм)', min_value=900, max_value=50000,  value=10000)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина структуры (δ/s в нм)', min_value=400, max_value=50000,  value=10000)
+        x5 = st.sidebar.slider('Толщина / ширина структуры (δ,s в нм)', min_value=400, max_value=50000,  value=10000)
        #u
-        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ/u в нм)', min_value=750, max_value=50000,  value=10000)
+        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ,u в нм)', min_value=750, max_value=50000,  value=10000)
        
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'DeltaCap longitudinal pitch': [x7/1000], 'u transverse pitch': [x7/1000], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
      
         with col2:
-            st.header("Значение интесификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =', x7, 'нм')
+            st.header("Значение интенсификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм; ', 'Δ,u =', x7, 'нм')
             if linReg:
                 y_linReg = lm_nanostructures_ethanol.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -317,16 +318,16 @@ elif genre == 'наноструктура':
        #h
         x3 = st.sidebar.slider('Высота структуры (h в нм)', min_value=55000, max_value=65000,  value=60000, disabled=True)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина структуры (δ/s в нм)', min_value=25000, max_value=35000,  value=30000, disabled=True)
+        x5 = st.sidebar.slider('Толщина / ширина структуры (δ,s в нм)', min_value=25000, max_value=35000,  value=30000, disabled=True)
        #u
-        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ/u в нм)', min_value=55000, max_value=65000,  value=60000, disabled=True)
+        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ,u в нм)', min_value=55000, max_value=65000,  value=60000, disabled=True)
        
         data_slider = {'h': [x3/1000], 'delta thickness': [x5/1000], 's width': [x5/1000], 'DeltaCap longitudinal pitch': [x7/1000], 'u transverse pitch': [x7/1000], 'q': [x1]}
         nm = pd.DataFrame(data=data_slider)
      
         with col2:
-            st.header("Значение интесификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =', x7, 'нм')
+            st.header("Значение интенсификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм; ', 'Δ,u =', x7, 'нм')
             if linReg:
                 y_linReg = lm_nanostructures_FC72.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -363,9 +364,9 @@ else:
        #h
         x3 = st.sidebar.slider('Высота структуры (h в нм)', min_value=1100000, max_value=2000000,  value=1500000)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина структуры (δ/s в нм)', min_value=800000, max_value=1000000,  value=900000)
+        x5 = st.sidebar.slider('Толщина / ширина структуры (δ,s в нм)', min_value=800000, max_value=1000000,  value=900000)
        #u
-        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ/u в нм)', min_value=400000, max_value=1000000,  value=700000)
+        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ,u в нм)', min_value=400000, max_value=1000000,  value=700000)
        #porosity
         x9 = st.sidebar.slider('Пористость, %', min_value=33, max_value=58,  value=40)
         
@@ -374,8 +375,8 @@ else:
         
 
         with col2:
-            st.header("Значение интесификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =', x7, 'нм', 'пористость =', x9)
+            st.header("Значение интенсификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм; ', 'Δ,u =', x7, 'нм', 'пористость =', x9)
             if linReg:
                 y_linReg = lm_porous_fins_water.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -403,9 +404,9 @@ else:
        #h
         x3 = st.sidebar.slider('Высота структуры (h в нм)', min_value=710000, max_value=2000000,  value=1000000)
        #d
-        x5 = st.sidebar.slider('Толщина / ширина структуры (δ/s в нм)', min_value=530000, max_value=1800000,  value=1000000)
+        x5 = st.sidebar.slider('Толщина / ширина структуры (δ,s в нм)', min_value=530000, max_value=1800000,  value=1000000)
        #u
-        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ/u в нм)', min_value=830000, max_value=1900000,  value=1000000)
+        x7 = st.sidebar.slider('Шаг между элементами структуры (Δ,u в нм)', min_value=830000, max_value=1900000,  value=1000000)
        #porosity
         x9 = st.sidebar.slider('Пористость, %', min_value=22, max_value=40,  value=30)
         
@@ -414,8 +415,8 @@ else:
         
 
         with col2:
-            st.header("Значение интесификации теплоотдачи")  
-            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ/s =', x5,'нм; ', 'Δ/u =', x7, 'нм', 'пористость =', x9)
+            st.header("Значение интенсификации теплоотдачи")  
+            st.write('q =', round(x1/1000, 1),'кВт; ', 'h =', x3,'нм; ', 'δ,s =', x5,'нм; ', 'Δ,u =', x7, 'нм', 'пористость =', x9)
             if linReg:
                 y_linReg = lm_porous_fins_n_Pentane.predict(nm)
                 st.write('LinearRegression: α/α0=',round(y_linReg[0], 2))
@@ -436,11 +437,4 @@ else:
                 st.write('RandomForest: α/α0=',round(y_randomforest[0], 2))
                 y_randomforest_qcrit=rndmforestmodel_porous_fins_water_qcrit.predict(nm)
                 st.write('RandomForest: qкрит/qкрит0=',round(y_randomforest_qcrit[0], 2))  
-
-
-
-
-
-
-
 
